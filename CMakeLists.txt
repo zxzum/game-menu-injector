@@ -1,22 +1,27 @@
 # CMakeLists.txt for Android NDK Project
 
-cmake_minimum_required(VERSION 3.4.1)
-
-# Set the project name
+cmake_minimum_required(VERSION 3.10)
 project(game-menu-injector)
 
-# Specify the source files
-set(SOURCE_FILES
-    main.cpp
-    # Add other source files here
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+set(SRC_FILES
+    src/main.cpp
+    src/process/process_manager.cpp
+    src/overlay/menu_overlay.cpp
+    src/overlay/input_listener.cpp
+    src/overlay/simple_renderer.cpp
+    src/injector/kitty_memory_bridge.cpp
 )
 
-# Add a library
-add_library(game-menu-injector SHARED ${SOURCE_FILES})
+add_executable(game-menu-injector ${SRC_FILES})
 
-# Include directories
-include_directories(include)
+target_include_directories(game-menu-injector PRIVATE include)
 
-# Find and link the necessary libraries
 find_library(log-lib log)
-target_link_libraries(game-menu-injector ${log-lib})
+
+if(log-lib)
+    target_link_libraries(game-menu-injector ${log-lib})
+endif()
+
