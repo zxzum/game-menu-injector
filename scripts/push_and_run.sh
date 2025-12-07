@@ -18,9 +18,16 @@ $ADB push "$BINARY_PATH" "$SDCARD_DEST"
 echo "[*] Escalating and preparing inside shell..."
 $ADB shell <<SH
 su -c "\
-  cp $SDCARD_DEST $REMOTE_TMP && \
-  chmod 755 $REMOTE_TMP && \
-  $REMOTE_TMP &"
+set -e; \
+  echo '[*] Stopping previous instance (if any)...'; \
+  pkill -f $TARGET_NAME 2>/dev/null || true; \
+  killall -q $TARGET_NAME 2>/dev/null || true; \
+  rm -f $REMOTE_TMP 2>/dev/null || true; \
+  echo '[*] Copying binary into /data/local/tmp'; \
+  cp $SDCARD_DEST $REMOTE_TMP; \
+  chmod 755 $REMOTE_TMP; \
+  echo '[*] Launching injector'; \
+  nohup $REMOTE_TMP >/dev/null 2>&1 &"
 SH
 
 echo "[*] Injector started from $REMOTE_TMP. Send SIGUSR1 to toggle menu:"

@@ -23,7 +23,7 @@ Use the helper script after building:
 
 The script:
 - Pushes the binary to `/sdcard/Download` via `adb`.
-- Enters `adb shell`, switches to `su`, copies the binary into `/data/local/tmp`, grants execution, and launches it in the background.
+- Enters `adb shell`, switches to `su`, stops any running injector instance, copies the binary into `/data/local/tmp`, grants execution, and launches it in the background. This avoids `Text file busy` errors if you re-run the script.
 
 ## Toggling the test menu
 
