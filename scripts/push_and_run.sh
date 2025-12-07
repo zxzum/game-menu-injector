@@ -18,7 +18,7 @@ $ADB push "$BINARY_PATH" "$SDCARD_DEST"
 echo "[*] Escalating and preparing inside shell..."
 $ADB shell <<SH
 su -c "\
-  set -e; \
+set -e; \
   echo '[*] Stopping previous instance (if any)...'; \
   pkill -f $TARGET_NAME 2>/dev/null || true; \
   killall -q $TARGET_NAME 2>/dev/null || true; \
