@@ -63,4 +63,3 @@ int main(int argc, char *argv[]) {
     __android_log_print(ANDROID_LOG_INFO, kLogTag, "Injector shutdown");
     return 0;
 }
-
